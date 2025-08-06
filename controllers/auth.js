@@ -6,10 +6,9 @@ exports.createUser = async (req, res, next) => {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
-    const role = req.body.role;
 
     const hashedPass = await bcrypt.hash(password, 12);
-    const user = new User({ name, email, password: hashedPass, role });
+    const user = new User({ name, email, password: hashedPass, role: "user" });
     try {
         const result = await user.save();
         res.status(201).json({
@@ -44,7 +43,7 @@ exports.login = async (req, res, next) => {
             email: user.email,
             role: user.role,
         },
-        "secretsercjsanjdn",
+        process.env.JWT_SECRET,
         { expiresIn: "1h" }
     );
     res.status(202).json({ message: "logged in successfully", token });
