@@ -48,6 +48,10 @@ const movieSchema = new Schema({
         ],
         default: [],
     },
+    revenue: {
+        type: Number,
+        default: 0,
+    },
 });
 
 module.exports = mongoose.model("Movie", movieSchema);
