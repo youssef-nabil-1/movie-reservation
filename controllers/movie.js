@@ -73,7 +73,16 @@ exports.getShowtimes = async (req, res, next) => {
     const movieId = req.params.id;
     const showtimes = await Showtime.find({
         movie: movieId,
-    });
+    }).populate("movie");
+
+    res.status(200).json({ message: "showtimes fetched", showtimes });
+};
+
+exports.getShowtimesByDate = async (req, res, next) => {
+    const date = req.params.date;
+    const showtimes = await Showtime.find({
+        date: new Date(date),
+    }).populate("movie");
 
     res.status(200).json({ message: "showtimes fetched", showtimes });
 };
