@@ -1,4 +1,7 @@
+const fs = require("fs");
+
 const Movie = require("../models/movie");
+const Reservation = require("../models/reservation");
 const Showtime = require("../models/showtime");
 
 exports.createMovie = async (req, res, next) => {
@@ -22,6 +25,23 @@ exports.createMovie = async (req, res, next) => {
     const result = await movie.save();
 
     res.status(201).json({ message: "Movie created", movie: result });
+};
+
+exports.deleteMovie = async (req, res, next) => {
+    if (req.role !== "admin") {
+        const err = new Error("Unauthorized");
+        err.statusCode = 401;
+        throw err;
+    }
+    const movieId = req.params.id;
+
+    const movie = await Movie.findByIdAndDelete(movieId);
+    const shows = await Showtime.deleteMany({ movie: movieId });
+    const reservatios = await Reservation.deleteMany({ movie: movieId });
+
+    fs.unlinkSync(`../posters/${movie.poster}`);
+
+    res.status(202).json({ message: "Movie deleted", movie });
 };
 
 exports.createShowtime = async (req, res, next) => {
