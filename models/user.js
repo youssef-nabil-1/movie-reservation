@@ -14,16 +14,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    cart: {
-        items: [
-            {
-                product: {
-                    type: Schema.Types.ObjectId,
-                    ref: "Product",
-                    required: true,
-                },
-                quantity: { type: Number, required: true },
-            },
-        ],
+    role: {
+        type: String,
+        required: true,
     },
 });
+
+module.exports = mongoose.model("User", userSchema);

@@ -10,7 +10,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use(authRouter);
+app.use("/auth", authRouter);
+
+app.use((err, req, res, next) => {
+    res.status(err.statusCode).json({ message: err.message });
+});
 
 mongoose
     .connect(process.env.MONGO_DB_URI)
