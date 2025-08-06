@@ -22,8 +22,8 @@ const showtimeSchema = new Schema({
     },
     availableSeats: {
         type: Number,
-        required: true,
         min: 0,
+        default: this.capacity,
     },
     movie: {
         type: Schema.Types.ObjectId,
