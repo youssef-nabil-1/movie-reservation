@@ -20,11 +20,6 @@ const showtimeSchema = new Schema({
         required: true,
         min: 0,
     },
-    availableSeats: {
-        type: Number,
-        min: 0,
-        default: this.capacity,
-    },
     movie: {
         type: Schema.Types.ObjectId,
         ref: "Movie",

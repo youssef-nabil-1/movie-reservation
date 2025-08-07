@@ -7,6 +7,7 @@ const fs = require("fs");
 
 const authRouter = require("./routes/auth");
 const movieRouter = require("./routes/movie");
+const reservationRouter = require("./routes/reservation");
 
 dotenv.config();
 const app = express();
@@ -40,6 +41,7 @@ app.use(bodyParser.json());
 
 app.use("/auth", authRouter);
 app.use("/movie", movieRouter);
+app.use("/reservation", reservationRouter);
 
 app.use((err, req, res, next) => {
     if (!err.statusCode) err.statusCode = 500;
